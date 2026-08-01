@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Iustinian's Cydia Repo</title>
 
@@ -14,117 +14,100 @@
 }
 
 body{
-    font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    background:#f2f2f7;
-    color:#000;
+    background:#f3f3f3;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
     display:flex;
     justify-content:center;
     align-items:center;
     min-height:100vh;
     padding:20px;
+    color:#222;
 }
 
 .card{
     width:100%;
-    max-width:420px;
+    max-width:500px;
     background:#fff;
     border-radius:22px;
-    padding:28px;
+    padding:35px;
     text-align:center;
-    box-shadow:0 8px 24px rgba(0,0,0,.12);
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
 
-img{
-    width:96px;
-    height:96px;
-    border-radius:22px;
-    display:block;
-    margin:0 auto 20px;
+.icon{
+    width:110px;
+    height:110px;
+    border-radius:24px;
+    margin-bottom:20px;
 }
 
 h1{
-    font-size:30px;
-    margin-bottom:10px;
+    font-size:32px;
+    margin-bottom:8px;
 }
 
 .subtitle{
     color:#666;
-    font-size:16px;
+    margin-bottom:30px;
     line-height:1.5;
-    margin-bottom:24px;
 }
 
-.repo{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    gap:12px;
-    background:#f2f2f7;
-    color:#007AFF;
-    border:1px solid #d1d1d6;
+.repo-title{
+    font-size:13px;
+    color:#888;
+    margin-bottom:10px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.repo-input{
+    width:100%;
+    padding:15px;
+    border:1px solid #ddd;
     border-radius:14px;
-    padding:16px;
-    cursor:pointer;
-    transition:.2s;
-    -webkit-tap-highlight-color:transparent;
-}
-
-.repo:hover{
-    background:#e9e9ed;
-}
-
-.repo:active{
-    background:#dcdce1;
-    transform:scale(.98);
-}
-
-.repo-text{
-    font-family:Menlo,monospace;
+    background:#fafafa;
+    color:#222;
+    font-family:Menlo,Consolas,monospace;
     font-size:14px;
-    text-align:left;
-    word-break:break-all;
+    text-align:center;
+    outline:none;
+    transition:.2s;
 }
 
-.copy-icon{
-    font-size:20px;
-    flex-shrink:0;
+.repo-input:focus{
+    border-color:#999;
+    background:#fff;
 }
 
-#status{
-    min-height:20px;
-    margin-top:15px;
-    color:#34C759;
-    font-weight:600;
-    opacity:0;
-    transition:.25s;
+.helper{
+    margin-top:10px;
+    color:#888;
+    font-size:14px;
 }
 
 footer{
-    margin-top:28px;
-    color:#8e8e93;
+    margin-top:30px;
+    color:#999;
     font-size:14px;
 }
 
-@media (max-width:380px){
+@media(max-width:500px){
 
 .card{
-    padding:22px;
+    padding:25px;
+}
+
+.icon{
+    width:90px;
+    height:90px;
 }
 
 h1{
-    font-size:26px;
+    font-size:27px;
 }
 
-.subtitle{
-    font-size:15px;
-}
-
-.repo-text{
+.repo-input{
     font-size:12px;
-}
-
-.copy-icon{
-    font-size:18px;
 }
 
 }
@@ -135,7 +118,7 @@ h1{
 
 <div class="card">
 
-<img src="CydiaIcon.png" alt="Repo Icon">
+<img src="CydiaIcon.png" class="icon" alt="Repo Icon">
 
 <h1>Iustinian's Repo</h1>
 
@@ -143,82 +126,27 @@ h1{
 Themes, tweaks, utilities and jailbreak projects.
 </p>
 
-<div class="repo" onclick="copyRepo()">
-    <div class="repo-text">
-        https://iustinian2013.github.io/cydia-repo/
-    </div>
-
-    <div class="copy-icon">
-        📋
-    </div>
+<div class="repo-title">
+Repository
 </div>
 
-<div id="status"></div>
+<input
+class="repo-input"
+type="text"
+value="https://iustinian2013.github.io/cydia-repo/"
+readonly
+onclick="this.focus();this.select();"
+onfocus="this.select();">
+
+<div class="helper">
+Tap the URL to select it, then tap <b>Copy</b>.
+</div>
 
 <footer>
-Tap the repository URL to copy it.
+Made with ❤️ by Iustinian
 </footer>
 
 </div>
-
-<script>
-const repo = "https://iustinian2013.github.io/cydia-repo/";
-
-function showStatus(message){
-    const status=document.getElementById("status");
-    status.textContent=message;
-    status.style.opacity="1";
-
-    setTimeout(function(){
-        status.style.opacity="0";
-    },2000);
-}
-
-function fallbackCopy(text){
-
-    const textarea=document.createElement("textarea");
-    textarea.value=text;
-
-    textarea.setAttribute("readonly","");
-    textarea.style.position="fixed";
-    textarea.style.left="-9999px";
-
-    document.body.appendChild(textarea);
-
-    textarea.focus();
-    textarea.select();
-    textarea.setSelectionRange(0,99999);
-
-    try{
-        document.execCommand("copy");
-        showStatus("✅ Repository copied!");
-    }catch(e){
-        prompt("Copy this repository URL:",text);
-    }
-
-    document.body.removeChild(textarea);
-}
-
-function copyRepo(){
-
-    if(navigator.clipboard && window.isSecureContext){
-
-        navigator.clipboard.writeText(repo)
-        .then(function(){
-            showStatus("✅ Repository copied!");
-        })
-        .catch(function(){
-            fallbackCopy(repo);
-        });
-
-    }else{
-
-        fallbackCopy(repo);
-
-    }
-
-}
-</script>
 
 </body>
 </html>
