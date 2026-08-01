@@ -1,121 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iustinian's Cydia Repo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<title>Iustinian's Cydia Repo</title>
 
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: #f5f5f7;
-            color: #1d1d1f;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-        .card {
-            background: white;
-            width: 90%;
-            max-width: 650px;
-            padding: 40px;
-            border-radius: 22px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,.08);
-        }
+body{
+    font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:#f2f2f7;
+    color:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    padding:20px;
+}
 
-        img {
-            width: 120px;
-            height: 120px;
-            border-radius: 25px;
-            margin-bottom: 20px;
-        }
+.card{
+    width:100%;
+    max-width:420px;
+    background:#fff;
+    border-radius:22px;
+    padding:28px;
+    text-align:center;
+    box-shadow:0 8px 24px rgba(0,0,0,.12);
+}
 
-        h1 {
-            margin: 10px 0;
-        }
+img{
+    width:96px;
+    height:96px;
+    border-radius:22px;
+    display:block;
+    margin:0 auto 20px;
+}
 
-        p {
-            color: #555;
-        }
+h1{
+    font-size:30px;
+    margin-bottom:10px;
+}
 
-        .repo {
-            margin-top: 25px;
-            background: #efefef;
-            padding: 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            user-select: none;
-            font-family: monospace;
-            transition: .2s;
-        }
+.subtitle{
+    color:#666;
+    font-size:16px;
+    line-height:1.5;
+    margin-bottom:24px;
+}
 
-        .repo:hover {
-            background: #dddddd;
-        }
+.repo{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    background:#f2f2f7;
+    color:#007AFF;
+    border:1px solid #d1d1d6;
+    border-radius:14px;
+    padding:16px;
+    cursor:pointer;
+    transition:.2s;
+    -webkit-tap-highlight-color:transparent;
+}
 
-        #copied {
-            color: #0a9b2a;
-            margin-top: 12px;
-            display: none;
-            font-weight: 600;
-        }
+.repo:hover{
+    background:#e9e9ed;
+}
 
-        footer {
-            margin-top: 30px;
-            color: #888;
-            font-size: 14px;
-        }
-    </style>
+.repo:active{
+    background:#dcdce1;
+    transform:scale(.98);
+}
+
+.repo-text{
+    font-family:Menlo,monospace;
+    font-size:14px;
+    text-align:left;
+    word-break:break-all;
+}
+
+.copy-icon{
+    font-size:20px;
+    flex-shrink:0;
+}
+
+#status{
+    min-height:20px;
+    margin-top:15px;
+    color:#34C759;
+    font-weight:600;
+    opacity:0;
+    transition:.25s;
+}
+
+footer{
+    margin-top:28px;
+    color:#8e8e93;
+    font-size:14px;
+}
+
+@media (max-width:380px){
+
+.card{
+    padding:22px;
+}
+
+h1{
+    font-size:26px;
+}
+
+.subtitle{
+    font-size:15px;
+}
+
+.repo-text{
+    font-size:12px;
+}
+
+.copy-icon{
+    font-size:18px;
+}
+
+}
+</style>
 </head>
 
 <body>
 
 <div class="card">
 
-    <img src="CydiaIcon.png" alt="Repo Icon">
+<img src="CydiaIcon.png" alt="Repo Icon">
 
-    <h1>Iustinian's Cydia Repo</h1>
+<h1>Iustinian's Repo</h1>
 
-    <p>
-        Custom tweaks, themes, utilities, and jailbreak projects.
-    </p>
+<p class="subtitle">
+Themes, tweaks, utilities and jailbreak projects.
+</p>
 
-    <h3>Add this repo to Cydia</h3>
-
-    <div class="repo" onclick="copyRepo()">
+<div class="repo" onclick="copyRepo()">
+    <div class="repo-text">
         https://iustinian2013.github.io/cydia-repo/
     </div>
 
-    <div id="copied">
-        ✅ Copied to clipboard!
+    <div class="copy-icon">
+        📋
     </div>
+</div>
 
-    <footer>
-        Made with ❤️ by Iustinian
-    </footer>
+<div id="status"></div>
+
+<footer>
+Tap the repository URL to copy it.
+</footer>
 
 </div>
 
 <script>
-function copyRepo() {
-    const repo = "https://iustinian2013.github.io/cydia-repo/";
+const repo = "https://iustinian2013.github.io/cydia-repo/";
 
-    navigator.clipboard.writeText(repo).then(function () {
-        const copied = document.getElementById("copied");
-        copied.style.display = "block";
+function showStatus(message){
+    const status=document.getElementById("status");
+    status.textContent=message;
+    status.style.opacity="1";
 
-        setTimeout(function () {
-            copied.style.display = "none";
-        }, 2000);
-    });
+    setTimeout(function(){
+        status.style.opacity="0";
+    },2000);
+}
+
+function fallbackCopy(text){
+
+    const textarea=document.createElement("textarea");
+    textarea.value=text;
+
+    textarea.setAttribute("readonly","");
+    textarea.style.position="fixed";
+    textarea.style.left="-9999px";
+
+    document.body.appendChild(textarea);
+
+    textarea.focus();
+    textarea.select();
+    textarea.setSelectionRange(0,99999);
+
+    try{
+        document.execCommand("copy");
+        showStatus("✅ Repository copied!");
+    }catch(e){
+        prompt("Copy this repository URL:",text);
+    }
+
+    document.body.removeChild(textarea);
+}
+
+function copyRepo(){
+
+    if(navigator.clipboard && window.isSecureContext){
+
+        navigator.clipboard.writeText(repo)
+        .then(function(){
+            showStatus("✅ Repository copied!");
+        })
+        .catch(function(){
+            fallbackCopy(repo);
+        });
+
+    }else{
+
+        fallbackCopy(repo);
+
+    }
+
 }
 </script>
 
