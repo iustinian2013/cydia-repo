@@ -2,7 +2,7 @@ Package: com.iustinian.pearphonebootlogo
 Version: 1.0
 Architecture: iphoneos-arm
 Maintainer: Iustinian
-Depends: org.chronic-dev.animate
+Depends: com.zaxdo.animate8
 Filename: ./debs/bootlogos/com.iustinian.pearphonebootlogo_1.0_iphoneos-arm.deb
 Size: 6072
 MD5sum: 0906caea22d5c93d5e67b5f71d0767fa
