@@ -38,7 +38,8 @@ body{
     width:110px;
     height:110px;
     border-radius:24px;
-    margin-bottom:20px;
+    display:block;
+    margin:0 auto 20px;
 }
 
 h1{
@@ -48,41 +49,70 @@ h1{
 
 .subtitle{
     color:#666;
-    margin-bottom:30px;
     line-height:1.5;
+    margin-bottom:30px;
 }
 
-.repo-title{
-    font-size:13px;
-    color:#888;
-    margin-bottom:10px;
-    text-transform:uppercase;
-    letter-spacing:1px;
-}
-
-.repo-input{
+.button{
+    display:block;
     width:100%;
-    padding:15px;
-    border:1px solid #ddd;
+    padding:16px;
+    margin-bottom:25px;
+    background:#28a745;
+    color:#fff;
+    text-decoration:none;
+    font-size:17px;
+    font-weight:bold;
     border-radius:14px;
-    background:#fafafa;
-    color:#222;
-    font-family:Menlo,Consolas,monospace;
-    font-size:14px;
-    text-align:center;
-    outline:none;
     transition:.2s;
 }
 
-.repo-input:focus{
-    border-color:#999;
-    background:#fff;
+.button:hover{
+    background:#23913d;
+}
+
+.button:active{
+    transform:scale(.98);
+}
+
+.repo-title{
+    color:#888;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:10px;
+}
+
+.repo{
+    background:#fafafa;
+    border:1px solid #ddd;
+    border-radius:14px;
+    padding:18px;
+    cursor:text;
+    word-break:break-all;
+    text-align:left;
+    -webkit-user-select:text;
+    user-select:text;
+}
+
+.repo code{
+    font-family:Menlo,Consolas,monospace;
+    font-size:14px;
+    display:block;
+    white-space:normal;
 }
 
 .helper{
-    margin-top:10px;
+    margin-top:12px;
     color:#888;
     font-size:14px;
+}
+
+#status{
+    height:22px;
+    margin-top:10px;
+    color:#2ebf4f;
+    font-weight:bold;
 }
 
 footer{
@@ -94,7 +124,7 @@ footer{
 @media(max-width:500px){
 
 .card{
-    padding:25px;
+    padding:24px;
 }
 
 .icon{
@@ -106,8 +136,12 @@ h1{
     font-size:27px;
 }
 
-.repo-input{
+.repo code{
     font-size:12px;
+}
+
+.button{
+    font-size:16px;
 }
 
 }
@@ -126,27 +160,62 @@ h1{
 Themes, tweaks, utilities and jailbreak projects.
 </p>
 
+<a class="button"
+href="cydia://url/https://cydia.saurik.com/api/share#?source=https://iustinian2013.github.io/cydia-repo/">
+Add to Cydia
+</a>
+
 <div class="repo-title">
 Repository
 </div>
 
-<input
-class="repo-input"
-type="text"
-value="https://iustinian2013.github.io/cydia-repo/"
-readonly
-onclick="this.focus();this.select();"
-onfocus="this.select();">
+<div class="repo" id="repo" onclick="selectRepo()">
+<code>https://iustinian2013.github.io/cydia-repo/</code>
+</div>
 
 <div class="helper">
-Tap the URL to select it, then tap <b>Copy</b>.
+Tap the repository to select it if the button above doesn't work.
 </div>
+
+<div id="status"></div>
 
 <footer>
 Made with ❤️ by Iustinian
 </footer>
 
 </div>
+
+<script>
+function selectRepo(){
+
+    var element=document.getElementById("repo");
+
+    if(document.body.createTextRange){
+
+        var range=document.body.createTextRange();
+        range.moveToElementText(element);
+        range.select();
+
+    }else if(window.getSelection){
+
+        var selection=window.getSelection();
+        var range=document.createRange();
+
+        range.selectNodeContents(element);
+
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+    }
+
+    document.getElementById("status").innerHTML="Selected!";
+
+    setTimeout(function(){
+        document.getElementById("status").innerHTML="";
+    },2000);
+
+}
+</script>
 
 </body>
 </html>
