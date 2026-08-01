@@ -1,0 +1,14 @@
+Package: com.iustinian.pearphonebootlogo
+Version: 1.0
+Architecture: iphoneos-arm
+Maintainer: Iustinian
+Depends: com.zaxdo.animate8
+Filename: ./debs/bootlogos/PearPhoneBootLogo.deb
+Size: 11650
+MD5sum: b554262307b8ba7efeb397403a776c5d
+SHA1: 2c40b2333075fd7cc8b684794c4d16958bf5645d
+SHA256: fcd8a625027722a1fcf9860d21d131a15fa85d2617ee5cf42d8fbb6683709b4e
+Section: Addons (BootLogo)
+Description: A PearPhone static boot logo for iOS 8.
+Name: PearPhone BootLogo
+
